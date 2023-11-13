@@ -1,0 +1,14 @@
+---
+layout: default
+hero: true
+---
+
+<h2>Most favorited</h2>
+
+{% assign statuses = site.statuses | sort: "favorite_count" | reverse %}
+{% include status-list.html statuses=statuses %}
+
+<h2>Most retweeted</h2>
+
+{% assign statuses = site.statuses | sort: "retweet_count" | reverse %}
+{% include status-list.html statuses=statuses %}

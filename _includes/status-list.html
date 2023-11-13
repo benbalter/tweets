@@ -1,0 +1,12 @@
+{% assign statuses = include.statuses | where_exp: "status", "status.retweeted != true" %}
+{% assign statuses = statuses | where_exp: "status", "status.reply != true" %}
+
+<ol>
+  {% for status in statuses limit: 50 %}
+  <li>
+    <a href="{{ status.url }}">{{ status.excerpt | markdownify | strip_html | truncate: 100 }}</a>
+    (<i class="fa-regular fa-heart"></i> {{ status.favorite_count }}, 
+     <i class="fa-solid fa-retweet"></i> {{ status.retweet_count }})
+  </li>
+{% endfor %}
+</ol>

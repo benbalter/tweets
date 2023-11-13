@@ -1,0 +1,55 @@
+---
+layout: default
+---
+
+
+
+
+
+
+
+
+
+
+<div class="row justify-content-center">
+  <div class="col-sm-6 mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-1 p-0 ps-2">
+            {% avatar benbalter size=50 %}
+          </div>
+          <div class="col">
+            Ben Balter<br />
+            <small class="text-body-secondary">@benbalter</small>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text m-0">{{ content | replace: "<p>", "" | replace: "</p>", "" }}</p>
+      </div>
+      {% for image in page.images %}
+        <img src="{{ image }}" class="card-img-bottom">
+      {% endfor %}
+      <div class="card-footer">
+        <small class="text-body-secondary">
+          <div class="row">
+            <div class="col-2">
+              <i class="fa-regular fa-heart"></i> {{ page.favorite_count }}
+            </div>
+            <div class="col-2">
+              <i class="fa-solid fa-retweet"></i> {{ page.retweet_count }}
+            </div>
+            <div class="col text-end">
+              <a href="{{ page.original_url}}" class="card-link">{{ page.date | date: "%Y-%m-%d %H:%m %P"}}</a>
+            </div>
+          </div>
+        </small>
+      </div>
+    </div>
+
+    <div class="alert alert-warning mt-3" role="alert">
+      <strong>❗ Heads up!</strong> This Tweet is archived and here for historical purposes. It may no longer be accurate or reflect my views. Proceed at your own risk.
+    </div>
+  </div>
+</div>

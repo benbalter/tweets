@@ -1,0 +1,79 @@
+title: "@benbalter's Twitter Archive"
+lang: en-US
+author:
+  name: Ben Balter
+  twitter: benbalter
+twitter:
+  username: "@benbalter"
+social:
+  name: Ben Balter
+  links:
+    - https://ben.balter.com
+    - https://twitter.com/BenBalter
+    - https://linkedin.com/in/BenBalter
+    - https://github.com/benbalter
+    - https://facebook.com/ben.balter
+    - https://instagram.com/benbalter
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-remote-theme
+  - jekyll-avatar
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-github-metadata
+  - jekyll-redirect-from
+
+sass:
+  style: compressed
+
+remote_theme: benbalter/retlab
+
+collections:
+  statuses:
+    output: true
+    permalink: "/status/:name/"
+
+permalink: pretty
+
+exclude:
+  - node_modules
+  - "*.json"
+  - "*.js"
+
+defaults:
+  - scope:
+      path: ""
+      type: "statuses"
+    values:
+      layout: status
+      archived: true
+
+markdown: CommonMarkGhPages
+commonmark:
+  options: ["smart", "footnotes"]
+  extensions: [ "autolink"]
+
+jekyll-mentions:
+  base_url: https://twitter.com
+
+  repository: benbalter/tweets
+
+timezone: America/New_York
+encoding: UTF-8
+
+feed:
+  path: "posts.xml"
+  posts_limit: 10000
+  collections:
+    statuses: 
+      path: "/feed.xml"
+
+nav_pages:
+  - posts.html
+  - about.html
+  - contact.html
+
+footer_pages:
+  - fine-print.html
