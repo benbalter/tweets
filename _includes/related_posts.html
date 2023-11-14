@@ -1,0 +1,10 @@
+<h2 class="border-top pt-3 h6">If you enjoyed this tweet, you might also enjoy:</h2>
+
+<ul>
+{% for relative_path in include.related_posts %}
+  {% assign status = site.statuses | where: "relative_path", relative_path | first %}
+    <li>
+      <a href="{{ status | relative_url }}">{{ status.title | truncate: 75 }}</a>
+    </li>
+  {% endfor %}
+</ul>

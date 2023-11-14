@@ -4,8 +4,8 @@ const truncate = require('truncate');
 const emojiRegex = require('emoji-regex');
 
 const fields = [
-  "id", "retweet_count", "favorite_count",
-  "retweeted", "entities"
+  "id", "retweet_count", "favorite_count", "id_str",
+  "retweeted", "entities", "in_reply_to_status_id_str", "in_reply_to_screen_name"
 ]
 
 const dir = "_statuses"

@@ -1,0 +1,21 @@
+{% if page.in_reply_to_status_id_str != '' %}
+  {% assign previous = site.statuses | where: "id_str", page.in_reply_to_status_id_str | first | relative_url %}
+{% endif %}
+
+{% assign next = site.statuses | where: "in_reply_to_status_id_str", page.id_str | first | relative_url %}
+
+{% if previous or next %}
+<div class="row mt-3">
+  {% if previous %}
+    <div class="col text-start ms-5">
+      <a href="{{ previous | relative_url }}">&laquo; In reply to</a>
+    </div>
+  {% endif %}
+
+  {% if next %}
+    <div class="col text-end me-5">
+      <a href="{{ next | relative_url }}">Next reply &raquo;</a>
+    </div>
+  {% endif %}
+</div>
+{% endif %}

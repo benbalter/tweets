@@ -47,6 +47,7 @@ site = Jekyll::Site.new(config)
 
 site.reset
 site.read
+site.collections['statuses'].docs.delete_if { |doc| doc.data["retweeted"] || doc.data["reply"] }
 
 relations = {}
 site.collections['statuses'].docs.each do |status|

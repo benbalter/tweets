@@ -1,4 +1,5 @@
 tweets.json
 package-lock.json
 .jekyll-cache
+.jekyll-metadata
 _site
