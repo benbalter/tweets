@@ -4,7 +4,7 @@
 <ol>
   {% for status in statuses limit: 50 %}
   <li>
-    <a href="{{ status.url | relative_url }}">{{ status.excerpt | markdownify | strip_html | truncate: 100 }}</a>
+    <a href="{{ status.url | relative_url }}">{{ status.title | markdownify | strip_html | truncate: 100 }}</a>
     (<i class="fa-regular fa-heart"></i> {{ status.favorite_count }}, 
      <i class="fa-solid fa-retweet"></i> {{ status.retweet_count }})
   </li>
