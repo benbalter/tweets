@@ -81,3 +81,4 @@ footer_pages:
   - fine-print.html
 
 repository: benbalter/tweets
+baseurl: tweets
