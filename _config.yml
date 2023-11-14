@@ -42,6 +42,7 @@ exclude:
   - node_modules
   - "*.json"
   - "*.js"
+  - vendor/
 
 defaults:
   - scope:
