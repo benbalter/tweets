@@ -31,6 +31,14 @@ jobs:
         id: pages
         uses: actions/configure-pages@v3
 
+      - name: Cache Jekyll
+        uses: actions/cache@v3
+        with:
+          path: |
+            .jekyll-cache
+            .jekyll-metadata
+          key: ${{ runner.os }}-${{ hashFiles('_statuses/**') }}
+
       - run: bundle exec jekyll build
         env:
           JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
