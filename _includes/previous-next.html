@@ -8,13 +8,13 @@
 <div class="row mt-3">
   {% if previous %}
     <div class="col text-start ms-5">
-      <a href="{{ previous | relative_url }}">&laquo; In reply to</a>
+      <a href="{{ previous }}">&laquo; In reply to</a>
     </div>
   {% endif %}
 
   {% if next %}
     <div class="col text-end me-5">
-      <a href="{{ next | relative_url }}">Next reply &raquo;</a>
+      <a href="{{ next }}">Next reply &raquo;</a>
     </div>
   {% endif %}
 </div>
