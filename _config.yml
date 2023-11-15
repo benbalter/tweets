@@ -79,6 +79,7 @@ nav_pages:
 
 footer_pages:
   - fine-print.html
+  - source.html
 
 repository: benbalter/tweets
 baseurl: tweets
