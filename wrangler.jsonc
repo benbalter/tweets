@@ -4,6 +4,11 @@
   "compatibility_date": "2026-06-08",
   "observability": { "enabled": true },
 
+  // Build the site before deploying. Adding this config made Cloudflare stop
+  // auto-detecting Jekyll and running its build, so run it explicitly here;
+  // it outputs to _site/tweets (per destination in _config.yml).
+  "build": { "command": "bundle exec jekyll build" },
+
   // Jekyll builds into _site/tweets (see destination in _config.yml). Point
   // the asset root at the PARENT (_site) so files serve at /tweets/* and match
   // the site's baseurl. Pointing this at _site/tweets would serve at root again
