@@ -84,3 +84,7 @@ footer_pages:
 repository: benbalter/tweets
 url: https://ben.balter.com
 baseurl: /tweets
+
+# Nest the build under /tweets so the deployed asset paths match baseurl,
+# letting Cloudflare serve it at ben.balter.com/tweets/* with no rewriting.
+destination: _site/tweets
