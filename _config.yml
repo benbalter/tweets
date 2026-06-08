@@ -82,4 +82,5 @@ footer_pages:
   - source.html
 
 repository: benbalter/tweets
-baseurl: tweets
+url: https://ben.balter.com
+baseurl: /tweets

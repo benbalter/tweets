@@ -1,0 +1,9 @@
+name = "tweets-proxy"
+main = "proxy.js"
+compatibility_date = "2026-06-01"
+
+# Worker routes take precedence over the personal-site Pages project on the
+# same zone, so this intercepts /tweets* before Pages returns its 404.
+routes = [
+  { pattern = "ben.balter.com/tweets*", zone_name = "ben.balter.com" },
+]
