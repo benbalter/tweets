@@ -17,13 +17,10 @@
     "directory": "_site"
   },
 
-  // Mount the Worker directly on the public path. The Worker route takes
-  // precedence over the personal-site Pages project on this zone, so
-  // ben.balter.com/tweets/* is served here instead of returning Pages' 404.
-  "routes": [
-    { "pattern": "ben.balter.com/tweets/*", "zone_name": "ben.balter.com" },
-    { "pattern": "ben.balter.com/tweets", "zone_name": "ben.balter.com" }
-  ],
+  // The public route ben.balter.com/tweets* is managed in the Cloudflare
+  // dashboard (Worker -> Settings -> Domains & Routes), not here: the Workers
+  // Builds deploy token lacks permission to create Worker routes, which would
+  // otherwise fail every deploy. The route only needs to be set once.
 
   "workers_dev": true
 }
