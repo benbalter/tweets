@@ -16,3 +16,7 @@ Archive's historical Tweets as a Jekyll site on GitHub Pages
 ## Related Tweets
 
 Run `script/build-related-statuses` and wait a while. It will create a `_data/related_statuses.yml` file.
+
+## Bluesky links
+
+If you've imported your tweets into Bluesky (which preserves each tweet's original timestamp), run `node script/build-bluesky-map.js` to print a coverage report (matched / missed / same-second ties), then `node script/build-bluesky-map.js --write` to generate `_data/bluesky.yml`. It fetches every public Bluesky post via the AT Protocol (no auth) and matches each archived tweet to its Bluesky post by timestamp. Statuses with a match render a "View on Bluesky" link; retweets and replies (not imported) simply get none.

@@ -32,6 +32,10 @@ layout: default
               <i class="fa-solid fa-retweet"></i> {{ page.retweet_count }}
             </div>
             <div class="col text-end">
+              {% assign bluesky_url = site.data.bluesky[page.id_str] %}
+              {% if bluesky_url %}
+                <a href="{{ bluesky_url }}" class="card-link"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+              {% endif %}
               <a href="{{ page.original_url}}" class="card-link">{{ page.date | date: "%Y-%m-%d"}}</a>
             </div>
           </div>
