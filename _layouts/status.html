@@ -2,6 +2,19 @@
 layout: default
 ---
 
+{% assign bluesky_url = site.data.bluesky[page.id_str] %}
+{% if bluesky_url %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SocialMediaPosting",
+    "url": {{ page.original_url | jsonify }},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "sameAs": {{ bluesky_url | jsonify }}
+  }
+  </script>
+{% endif %}
+
 <div class="row justify-content-center">
   <div class="col-sm-6 mb-3 mb-sm-0">
     <div class="card">
@@ -32,9 +45,8 @@ layout: default
               <i class="fa-solid fa-retweet"></i> {{ page.retweet_count }}
             </div>
             <div class="col text-end">
-              {% assign bluesky_url = site.data.bluesky[page.id_str] %}
               {% if bluesky_url %}
-                <a href="{{ bluesky_url }}" class="card-link"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
+                <a href="{{ bluesky_url }}" class="card-link u-syndication"><i class="fa-brands fa-bluesky"></i> Bluesky</a>
               {% endif %}
               <a href="{{ page.original_url}}" class="card-link">{{ page.date | date: "%Y-%m-%d"}}</a>
             </div>
