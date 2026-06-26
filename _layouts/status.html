@@ -10,6 +10,12 @@ layout: default
     "@type": "SocialMediaPosting",
     "url": {{ page.original_url | jsonify }},
     "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "author": {
+      "@type": "Person",
+      "name": "Ben Balter",
+      "alternateName": "@benbalter",
+      "url": "https://ben.balter.com"
+    },
     "sameAs": {{ bluesky_url | jsonify }}
   }
   </script>
