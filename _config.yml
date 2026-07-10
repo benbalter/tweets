@@ -45,6 +45,14 @@ exclude:
   - vendor/
 
 defaults:
+  # Archival tweet mirror: keep every page linkable, but out of the search index.
+  # `noindex` drops the thin, high-volume /status/ pages from search; `follow`
+  # preserves link equity to their destinations. Rendered by the retlab theme's
+  # `{% if page.robots %}` head tag.
+  - scope:
+      path: ""
+    values:
+      robots: "noindex, follow"
   - scope:
       path: ""
       type: "statuses"
