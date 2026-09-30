@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "emoji-regex": "^10.3.0",
+    "emoji-regex": "^11.0.0",
     "js-yaml": "^4.1.0",
     "truncate": "^3.0.0"
   }
