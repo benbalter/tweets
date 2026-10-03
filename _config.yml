@@ -39,6 +39,7 @@ collections:
 permalink: pretty
 
 exclude:
+  - CLAUDE.md
   - node_modules
   - "*.json"
   - "*.js"
