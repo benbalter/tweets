@@ -17,10 +17,10 @@
     "directory": "_site"
   },
 
-  // The public route ben.balter.com/tweets* is managed in the Cloudflare
-  // dashboard (Worker -> Settings -> Domains & Routes), not here: the Workers
-  // Builds deploy token lacks permission to create Worker routes, which would
-  // otherwise fail every deploy. The route only needs to be set once.
+  // The public route ben.balter.com/tweets* is managed in OpenTofu, in
+  // benbalter/dns (zone.balter.com.tf), not here: the Workers Builds deploy
+  // token lacks permission to create Worker routes, which would otherwise fail
+  // every deploy. Change the route there, not in the dashboard.
 
   "workers_dev": true
 }
