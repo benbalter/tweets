@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Counts from '../components/Counts.astro';
+import { SITE_TITLE, decodeEntities, isOriginal, loadStatuses, statusPath, type Status } from '../lib/statuses';
+
+const { all } = await loadStatuses();
+const originals = all.filter(isOriginal);
+const top = (key: 'favorite_count' | 'retweet_count') =>
+  [...originals].sort((a, b) => b.data[key] - a.data[key]).slice(0, 50);
+
+const lists: [string, Status[]][] = [
+  ['Most favorited', top('favorite_count')],
+  ['Most retweeted', top('retweet_count')],
+];
+---
+
+<Base>
+  <h1 class="sr-only">{SITE_TITLE}</h1>
+  {
+    lists.map(([heading, statuses]) => (
+      <section class="mb-10">
+        <h2 class="mb-4 text-2xl font-semibold">{heading}</h2>
+        <ol class="list-decimal space-y-2 pl-8">
+          {statuses.map((s) => (
+            <li>
+              <a href={statusPath(s.id)}>{decodeEntities(s.data.title)}</a>{' '}
+              <Counts status={s} class="inline-flex text-sm" />
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</Base>

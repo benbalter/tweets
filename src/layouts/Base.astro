@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../lib/statuses';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute URL for og:image. */
+  image?: string;
+  /** ISO 8601 publish time; marks the page as an article. */
+  published?: string;
+  /** Replies and retweets use plain `noindex`; everything else keeps `follow`. */
+  robots?: string;
+}
+
+const { title, description = SITE_DESCRIPTION, image, published, robots = 'noindex, follow' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const feed = new URL(`${base}feed.xml`, Astro.site).href;
+const rel_me = [
+  'https://ben.balter.com',
+  'https://twitter.com/BenBalter',
+  'https://linkedin.com/in/BenBalter',
+  'https://github.com/benbalter',
+  'https://facebook.com/ben.balter',
+  'https://instagram.com/benbalter',
+];
+---
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Ben Balter" />
+    <meta name="robots" content={robots} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/atom+xml" href={feed} title={SITE_TITLE} />
+    {rel_me.map((href) => <link rel="me" href={href} />)}
+    <link rel="icon" type="image/png" sizes="32x32" href={`${base}favicon-32x32.png`} />
+    <link rel="icon" type="image/png" sizes="16x16" href={`${base}favicon-16x16.png`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
+    <meta property="og:title" content={title ?? SITE_TITLE} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content={published ? 'article' : 'website'} />
+    {image && <meta property="og:image" content={image} />}
+    {published && <meta property="article:published_time" content={published} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:site" content="@benbalter" />
+    <meta name="twitter:creator" content="@benbalter" />
+    <slot name="head" />
+  </head>
+  <body class="bg-white font-sans text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-200">
+    <header class="border-b border-gray-200 dark:border-gray-700">
+      <nav class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
+        <a href={base} class="font-bold text-gray-900 dark:text-gray-100">{SITE_TITLE}</a>
+        <ul class="flex gap-4 text-sm">
+          <li><a href="https://ben.balter.com">Posts</a></li>
+          <li><a href="https://ben.balter.com/about/">About</a></li>
+          <li><a href="https://ben.balter.com/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-3xl px-4 py-8">
+      <slot />
+    </main>
+    <footer class="mx-auto flex max-w-3xl gap-4 px-4 pb-8 text-sm text-gray-600 dark:text-gray-400">
+      <a href="https://ben.balter.com/fine-print/">Fine print</a>
+      <a href="https://github.com/benbalter/tweets">Source</a>
+    </footer>
+  </body>
+</html>

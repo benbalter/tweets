@@ -1,0 +1,111 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Counts from '../../components/Counts.astro';
+import {
+  blueskyUrl,
+  decodeEntities,
+  displayDate,
+  imageSrc,
+  isoDate,
+  loadStatuses,
+  relatedStatuses,
+  statusPath,
+  truncate,
+  type Status,
+} from '../../lib/statuses';
+
+export async function getStaticPaths() {
+  const { all } = await loadStatuses();
+  return all.map((status) => ({ params: { id: status.id }, props: { status } }));
+}
+
+const { status } = Astro.props as { status: Status };
+const { data } = status;
+const { Content } = await render(status);
+const { byId, firstReply } = await loadStatuses();
+
+const parent = data.in_reply_to_status_id_str ? byId.get(data.in_reply_to_status_id_str) : undefined;
+const next = firstReply.get(status.id);
+const related = await relatedStatuses(status.id);
+const bluesky = blueskyUrl(status.id);
+const title = decodeEntities(data.title);
+const published = isoDate(data.date);
+const images = (data.images ?? []).map(imageSrc);
+const ogImage = images[0] ? new URL(images[0], Astro.site).href : undefined;
+
+// One SocialMediaPosting per status. jekyll-seo-tag also called every tweet a
+// BlogPosting, which contradicted this.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SocialMediaPosting',
+  url: data.original_url,
+  headline: title,
+  datePublished: published,
+  mainEntityOfPage: new URL(statusPath(status.id), Astro.site).href,
+  author: { '@type': 'Person', name: 'Ben Balter', alternateName: '@benbalter', url: 'https://ben.balter.com' },
+  ...(ogImage && { image: ogImage }),
+  ...(bluesky && { sameAs: bluesky }),
+};
+---
+
+<Base title={title} description={title} image={ogImage} published={published} robots={data.robots}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  <h1 class="sr-only">Tweet by @benbalter on {displayDate(data.date)}</h1>
+  <article class="mx-auto max-w-xl overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700">
+    <header class="flex items-center gap-3 border-b border-gray-300 bg-gray-100 px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
+      <img src="https://github.com/benbalter.png?size=100" alt="Ben Balter" width="40" height="40" class="rounded-full" />
+      <div class="leading-tight">
+        Ben Balter<br />
+        <small class="text-gray-600 dark:text-gray-400">@benbalter</small>
+      </div>
+    </header>
+    <div class="px-4 py-4 text-lg break-words [&>*+*]:mt-3 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6">
+      <Content />
+    </div>
+    {images.map((src) => <img src={src} alt="Image attached to the tweet" class="w-full" loading="lazy" />)}
+    <footer class="flex flex-wrap items-center gap-4 border-t border-gray-300 bg-gray-100 px-4 py-2 text-sm dark:border-gray-700 dark:bg-gray-800">
+      <Counts status={status} class="flex" />
+      <span class="ml-auto flex items-center gap-4">
+        {
+          bluesky && (
+            <a href={bluesky} class="u-syndication inline-flex items-center gap-1">
+              <svg aria-hidden="true" class="size-4" viewBox="0 0 600 530" fill="currentColor"><path d="m135.72 44.03c66.496 49.921 138.02 151.14 164.28 205.46 26.262-54.316 97.782-155.54 164.28-205.46 47.98-36.021 125.72-63.892 125.72 24.795 0 17.712-10.155 148.79-16.111 170.07-20.703 73.984-96.144 92.854-163.25 81.433 117.3 19.964 147.14 86.092 82.697 152.22-122.39 125.59-175.91-31.511-189.63-71.766-2.514-7.3797-3.6904-10.832-3.7077-7.8964-0.0174-2.9357-1.1937 0.51669-3.7077 7.8964-13.714 40.255-67.233 197.36-189.63 71.766-64.444-66.128-34.605-132.26 82.697-152.22-67.108 11.421-142.55-7.4491-163.25-81.433-5.9562-21.282-16.111-152.36-16.111-170.07 0-88.687 77.742-60.816 125.72-24.795z" /></svg>
+              Bluesky
+            </a>
+          )
+        }
+        <a href={data.original_url}><time datetime={published}>{displayDate(data.date)}</time></a>
+      </span>
+    </footer>
+  </article>
+
+  {
+    (parent || next) && (
+      <nav class="mx-auto mt-4 flex max-w-xl justify-between px-4" aria-label="Conversation">
+        {parent ? <a href={statusPath(parent.id)}>&laquo; In reply to</a> : <span />}
+        {next && <a href={statusPath(next.id)}>Next reply &raquo;</a>}
+      </nav>
+    )
+  }
+
+  <p class="mx-auto mt-6 max-w-xl rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-200" role="note">
+    <strong>❗ Heads up!</strong> This Tweet is archived and here for historical purposes. It may no longer be accurate or reflect my views. Proceed at your own risk.
+  </p>
+
+  {
+    related.length > 0 && (
+      <section class="mx-auto mt-6 max-w-xl border-t border-gray-300 pt-4 dark:border-gray-700">
+        <h2 class="mb-2 text-base font-semibold">If you enjoyed this tweet, you might also enjoy:</h2>
+        <ul class="list-disc space-y-1 pl-6">
+          {related.map((s) => (
+            <li>
+              <a href={statusPath(s.id)}>{truncate(decodeEntities(s.data.title), 75)}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</Base>

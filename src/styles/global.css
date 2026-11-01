@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Palette copied from ben.balter.com (benbalter.github.com src/styles/global.css)
+ * so the archive matches the main site. */
+@theme {
+  --color-primary-300: #80b9e6;
+  --color-primary-500: #337ab7;
+  --color-primary-600: #2a6493;
+  --color-gray-100: #f8f9fa;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #6c757d;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+@layer base {
+  a {
+    @apply text-primary-500 underline-offset-2 hover:underline dark:text-primary-300;
+  }
+}

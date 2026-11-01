@@ -4,17 +4,15 @@
   "compatibility_date": "2026-06-08",
   "observability": { "enabled": true },
 
-  // Build the site before deploying. Adding this config made Cloudflare stop
-  // auto-detecting Jekyll and running its build, so run it explicitly here;
-  // it outputs to _site/tweets (per destination in _config.yml).
-  "build": { "command": "bundle exec jekyll build" },
+  // Build the site before deploying. Workers Builds doesn't detect Astro once
+  // this config exists, so run the build explicitly.
+  "build": { "command": "npm run build" },
 
-  // Jekyll builds into _site/tweets (see destination in _config.yml). Point
-  // the asset root at the PARENT (_site) so files serve at /tweets/* and match
-  // the site's baseurl. Pointing this at _site/tweets would serve at root again
-  // and re-break every link.
+  // Astro builds into dist/tweets (outDir in astro.config.mjs). Point the asset
+  // root at the PARENT (dist) so files serve at /tweets/* and match the site's
+  // base. Pointing this at dist/tweets would serve at root and break every link.
   "assets": {
-    "directory": "_site"
+    "directory": "dist"
   },
 
   // The public route ben.balter.com/tweets* is managed in OpenTofu, in
