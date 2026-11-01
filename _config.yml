@@ -49,11 +49,14 @@ defaults:
   # Archival tweet mirror: keep every page linkable, but out of the search index.
   # `noindex` drops the thin, high-volume /status/ pages from search; `follow`
   # preserves link equity to their destinations. Rendered by the retlab theme's
-  # `{% if page.robots %}` head tag.
+  # `{% if page.robots %}` head tag. `sitemap: false` keeps the same pages out
+  # of jekyll-sitemap's sitemap.xml, since listing noindexed URLs there asks
+  # Google to crawl pages it's been told not to index.
   - scope:
       path: ""
     values:
       robots: "noindex, follow"
+      sitemap: false
   - scope:
       path: ""
       type: "statuses"
