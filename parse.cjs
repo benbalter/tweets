@@ -27,8 +27,6 @@ for (const tweet of tweets) {
   filtered.date = createdAt.toISOString();
   
   let body = tweet.tweet.full_text;
-  body = body.replaceAll("{%", "{% raw %}{%{% endraw %}");
-  body = body.replaceAll("{{", "{% raw %}{{{% endraw %}");
 
   // Replace URLs
   if (filtered.entities.urls) {

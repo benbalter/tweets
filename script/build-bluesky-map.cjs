@@ -5,7 +5,7 @@
 // the second) as the Bluesky post's createdAt, so we join on the timestamp.
 // Bluesky posts are publicly readable without auth via com.atproto.repo.listRecords.
 //
-// Run: node script/build-bluesky-map.js [--write]
+// Run: node script/build-bluesky-map.cjs [--write]
 // Without --write it only reports match/collision/miss counts (dry run).
 
 const fs = require('fs');
@@ -23,7 +23,7 @@ function secondKey(iso) {
 }
 
 // Normalize text for the rare same-second collision tiebreaker only. Strip URLs
-// (parse.js expands t.co; Bluesky keeps its own form), lowercase, collapse space.
+// (parse.cjs expands t.co; Bluesky keeps its own form), lowercase, collapse space.
 function normalize(text) {
   return (text || '')
     .toLowerCase()

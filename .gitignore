@@ -1,5 +1,5 @@
 tweets.json
-package-lock.json
-.jekyll-cache
-.jekyll-metadata
-_site
+node_modules/
+dist/
+.astro/
+.wrangler/
