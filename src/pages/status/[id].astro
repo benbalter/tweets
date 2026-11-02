@@ -47,10 +47,13 @@ const jsonLd = {
   ...(ogImage && { image: ogImage }),
   ...(bluesky && { sameAs: bluesky }),
 };
+// Tweet text can contain `<`; escape it so a `</script>` in a tweet can't end
+// the JSON-LD block early. \u003c is still valid JSON.
+const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <Base title={title} description={title} image={ogImage} published={published} robots={data.robots}>
-  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" slot="head" set:html={jsonLdHtml} />
 
   <h1 class="sr-only">Tweet by @benbalter on {displayDate(data.date)}</h1>
   <article class="mx-auto max-w-xl overflow-hidden rounded-lg border border-gray-300 dark:border-gray-700">
