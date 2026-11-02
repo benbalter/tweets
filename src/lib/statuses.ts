@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Status = CollectionEntry<'statuses'>;
@@ -11,7 +11,7 @@ export const SITE_DESCRIPTION = 'Historic archive of Tweets from @benbalter';
 const TIME_ZONE = 'America/New_York';
 
 function loadYaml<T>(file: string): T {
-  return yaml.load(fs.readFileSync(file, 'utf8')) as T;
+  return load(fs.readFileSync(file, 'utf8')) as T;
 }
 
 // Tweet id -> imported Bluesky post URL, from script/build-bluesky-map.js.
