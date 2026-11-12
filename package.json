@@ -17,10 +17,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
-    "@astrojs/markdown-remark": "7.3.5",
+    "@astrojs/markdown-remark": "7.3.6",
     "@tailwindcss/vite": "4.3.3",
     "@types/node": "26.6.6",
-    "astro": "7.4.5",
+    "astro": "7.4.7",
     "mdast-util-find-and-replace": "3.0.4",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3",
