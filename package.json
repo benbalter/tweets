@@ -18,11 +18,11 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@astrojs/markdown-remark": "7.3.6",
-    "@tailwindcss/vite": "4.3.3",
+    "@tailwindcss/vite": "4.3.5",
     "@types/node": "26.6.6",
     "astro": "7.4.7",
     "mdast-util-find-and-replace": "3.0.4",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "unist-util-visit": "5.2.0",
     "wrangler": "4.158.0"
