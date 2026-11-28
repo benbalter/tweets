@@ -21,7 +21,7 @@
     "@tailwindcss/vite": "4.3.5",
     "@types/node": "26.6.6",
     "astro": "7.4.13",
-    "mdast-util-find-and-replace": "3.0.4",
+    "mdast-util-find-and-replace": "3.0.5",
     "tailwindcss": "4.3.5",
     "typescript": "6.0.3",
     "unist-util-visit": "5.2.0",
